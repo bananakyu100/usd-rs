@@ -25,40 +25,58 @@ impl From<&bool> for &Bool {
     }
 }
 
-cpp_class!(pub unsafe struct ArrayBool as "pxr::VtArray<bool>");
+pub struct ArrayBool {
+    ptr : * mut std::ffi::c_void,
+}
+
+impl Drop for ArrayBool {
+    fn drop(&mut self) {
+        unsafe {
+            let ptr = self.ptr;
+            cpp!([ptr as "pxr::VtArray<bool> *"] {
+                delete ptr;
+            })
+        }
+    }
+}
 
 impl VtArray<bool> for ArrayBool {
     fn new() -> Self {
-        unsafe {
-            cpp!([] -> ArrayBool as "pxr::VtArray<bool>" {
-                return pxr::VtArray<bool>();
-            })
+        Self {
+            ptr : unsafe {
+                cpp!([] -> * mut std::ffi::c_void as "pxr::VtArray<bool>*" {
+                    return new pxr::VtArray<bool>();
+                })
+            }
         }
     }
 
     fn size(&self) -> usize {
         unsafe {
-            cpp!([self as "const pxr::VtArray<bool> *"]
+            let ptr = self.ptr;
+            cpp!([ptr as "const pxr::VtArray<bool> *"]
                 -> usize as "size_t" {
-                return self->size();
+                return ptr->size();
             })
         }
     }
 
     fn reserve(&mut self, num: usize) {
         unsafe {
-            cpp!([self as "pxr::VtArray<bool> *",
+            let ptr = self.ptr;
+            cpp!([ptr as "pxr::VtArray<bool> *",
                   num as "size_t"] {
-                self->reserve(num);
+                    ptr->reserve(num);
             })
         }
     }
 
     fn push_back(&mut self, elem: &bool) {
         unsafe {
-            cpp!([self as "pxr::VtArray<bool> *",
+            let ptr = self.ptr;
+            cpp!([ptr as "pxr::VtArray<bool> *",
                   elem as "const bool *"] {
-                self->push_back(*elem);
+                    ptr->push_back(*elem);
             })
         }
     }
@@ -73,10 +91,11 @@ impl std::ops::Index<usize> for ArrayBool {
         }
 
         unsafe {
-            cpp!([self as "const pxr::VtArray<bool> *",
+            let ptr = self.ptr;
+            cpp!([ptr as "const pxr::VtArray<bool> *",
                   index as "size_t"]
                 -> * const bool as "const bool *" {
-                return &self->operator[](index);
+                return &ptr->operator[](index);
             })
             .as_ref()
             .expect("Error converting pointer to reference")
@@ -92,10 +111,11 @@ impl std::ops::IndexMut<usize> for ArrayBool {
         }
 
         unsafe {
-            cpp!([self as "pxr::VtArray<bool> *",
+            let ptr = self.ptr;
+            cpp!([ptr as "pxr::VtArray<bool> *",
                   index as "size_t"]
                 -> * mut bool as "bool *" {
-                return &self->operator[](index);
+                return &ptr->operator[](index);
             })
             .as_mut()
             .expect("Error converting pointer to reference")

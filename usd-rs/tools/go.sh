@@ -1,6 +1,6 @@
 export PATH=/Volumes/src/cppmm/build
 
-cppmm ../bind -u                                    \
+cppmm ./bind -u                                     \
     -l ../../target/debug/deps/libusd.dylib         \
     -o usd-c                                        \
     --                                              \

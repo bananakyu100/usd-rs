@@ -1,5 +1,6 @@
 export PATH=/Volumes/src/cppmm/build
 
+#cppmm /Volumes/src/usd-rs/usd-rs/tools/bind -u                                     \
 cppmm ./bind -u                                     \
     -o usd-c                                        \
     --                                              \

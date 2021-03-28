@@ -69,9 +69,9 @@ fn write_lib_info(out_dir: &std::path::PathBuf, info: [std::path::PathBuf; 3]) {
     write!(
         std::fs::File::create(locations_path).unwrap(),
         "\
-pub const INCLUDE : &str = \"{}\"; \n\
-pub const LIBS : &str = \"{}\"; \n\
-pub const LIB : &str = \"{}\"; \n\
+pub const INCLUDE : &str = r\"{}\"; \n\
+pub const LIBS : &str = r\"{}\"; \n\
+pub const LIB : &str = r\"{}\"; \n\
 ",
         info[0].to_str().unwrap(),
         info[1].to_str().unwrap(),

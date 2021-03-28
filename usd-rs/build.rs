@@ -48,6 +48,7 @@ fn main() {
         // Handle the embedded c++ code
         cpp_build::Config::new()
             .include(usd_cpp::INCLUDE)
+            .include(format!("{}\\boost-1_70", usd_cpp::INCLUDE))
             .flag("-std=c++14")
             .build("src/lib.rs");
     }

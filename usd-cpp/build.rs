@@ -76,7 +76,7 @@ pub const LIB : &str = r\"{}\"; \n\
         info[0].to_str().unwrap(),
         info[1].to_str().unwrap(),
         info[2].to_str().unwrap(),
-    );
+    ).unwrap();
 }
 
 fn write_stub_lib_info(out_dir: &std::path::PathBuf) {
@@ -91,7 +91,7 @@ pub const INCLUDE : &str = \"\"; \n\
 pub const LIBS : &str = \"\"; \n\
 pub const LIB : &str = \"\"; \n\
 "
-    );
+    ).unwrap();
 }
 
 fn main() {

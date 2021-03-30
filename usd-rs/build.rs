@@ -15,14 +15,14 @@ fn copy_headers(out_dir: &std::path::PathBuf) -> std::path::PathBuf {
     let mut include_dir = cpp_out_dir.clone();
     include_dir.push("include");
 
-    std::fs::create_dir_all(cpp_out_dir.clone());
+    std::fs::create_dir_all(cpp_out_dir.clone()).expect(format!("failed to crate dir {:?}", &cpp_out_dir).as_str());
     let mut options = fs_extra::dir::CopyOptions::default();
     options.overwrite = true;
     fs_extra::dir::copy(source_include_dir, cpp_out_dir.clone(), &options)
         .unwrap();
 
-    let lib = std::path::PathBuf::from("");
-    let lib_dir = std::path::PathBuf::from("");
+    //let lib = std::path::PathBuf::from("");
+    //let lib_dir = std::path::PathBuf::from("");
 
     include_dir
 }

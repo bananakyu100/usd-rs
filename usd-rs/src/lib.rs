@@ -10,6 +10,6 @@
 //! and shading encoding atop USD's domain-agnostic core.
 
 #![deny(warnings)]
-//pub mod pxr;
+pub mod pxr;
 
 pub use c_str_macro::c_str;

@@ -49,6 +49,7 @@ fn main() {
         cpp_build::Config::new()
             .include(usd_cpp::INCLUDE)
             .include(format!("{}\\boost-1_70", usd_cpp::INCLUDE))
+            .define("NOMINMAX", None)
             .flag("-std=c++14")
             .build("src/lib.rs");
     }

@@ -6,6 +6,7 @@ pub mod result;
 pub mod sdf;
 pub mod tf;
 pub mod usd;
+pub mod usd_geom;
 pub mod vt;
 
 pub use error::Error;
